@@ -1,0 +1,27 @@
+version: "3"
+services: 
+  hihiiro:
+    build:
+      context: ./src
+      dockerfile: dev.dockerfile
+    tty: true
+    working_dir: /bot/app
+    entrypoint: bash ./entrypoint.dev.sh
+    env_file:
+    - .env
+    depends_on:
+      - postgres
+    volumes:
+      - ./src:/bot
+  postgres:
+    image: postgres:14.8
+    restart: always
+    container_name: my_postgres
+    ports:
+     - 5432:5432
+    env_file:
+      - .env
+    volumes:
+      - ./src/psgl/data:/var/lib/postgresql/data
+      - ./src/psgl/tmp:/var/run/postgresql
+      - ./src/psgl/initdb:/docker-entrypoint-initdb.d

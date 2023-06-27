@@ -1,0 +1,9 @@
+{
+	"folders": [
+		{
+			"uri": "vscode-remote://wsl+ubuntu-22.04/home/isbn/DiscordBot"
+		}
+	],
+	"remoteAuthority": "wsl+Ubuntu-22.04",
+	"settings": {}
+}
