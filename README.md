@@ -231,13 +231,18 @@ PostgreSQLサーバーが終了していない状態で、`sudo ./run.sh dev up`
 # Raspberry Piに移植（ほかのデバイスでビルド）
 
 1. このリポジトリをRaspberry Piの適当なディレクトリ(~/Documents/)などにgit clone
-2. `chmod 777 -R DiscordBot`で権限を付与
-3. 3. DiscordBot/.envにDiscordBotのTOKENやPostgreSQLのDATABASE_URLなど、必要な環境変数を書き込む(`nano .env`)
-4. `sudo ./run.sh dev build`,`sudo ./run.sh dev up`を試してみる。postgresのコンテナがエラーを吐いている場合、その内容に従って修正を行う。
+
+具体的な方法は以下の記事を参照。
+
+[【GitHub】Deploy keysを使ってsshでpullするまで](https://qiita.com/tamorieeeen/items/c24f8285448b607b12dd)
+
+3. `chmod 777 -R DiscordBot`で権限を付与
+4. 3. DiscordBot/.envにDiscordBotのTOKENやPostgreSQLのDATABASE_URLなど、必要な環境変数を書き込む(`nano .env`)
+5. `sudo ./run.sh dev build`,`sudo ./run.sh dev up`を試してみる。postgresのコンテナがエラーを吐いている場合、その内容に従って修正を行う。
 
 ## データベースの移植を行う場合
 
-src/psgl/dataにpostgresqlのmainディレクトリを移植する。linuxの場合は、/etc/postgresql/14/mainに保存されている。
+src/psgl/dataにpostgresqlのmainディレクトリを移植する。linuxの場合は、/etc/postgresql/14/mainに保存されているはず。
 
 5. FATAL:  could not open directory "pg_notify": No such file or directoryなどと表示される場合、src/psgl/data/に不足しているファイル・ディレクトリを作成する。
 - pg_notify
