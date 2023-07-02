@@ -232,8 +232,14 @@ PostgreSQLサーバーが終了していない状態で、`sudo ./run.sh dev up`
 
 1. このリポジトリをRaspberry Piの適当なディレクトリ(~/Documents/)などにgit clone
 2. `chmod 777 -R DiscordBot`で権限を付与
-3. DiscordBot/.envにDiscordBotのTOKENやPostgreSQLのDATABASE_URLなど、必要な環境変数を書き込む(`nano .env`)
-4. FATAL:  could not open directory "pg_notify": No such file or directoryなどと表示される場合、src/psgl/data/に不足しているファイル・ディレクトリを作成する。
+3. 3. DiscordBot/.envにDiscordBotのTOKENやPostgreSQLのDATABASE_URLなど、必要な環境変数を書き込む(`nano .env`)
+4. `sudo ./run.sh dev build`,`sudo ./run.sh dev up`を試してみる。postgresのコンテナがエラーを吐いている場合、その内容に従って修正を行う。
+
+## データベースの移植を行う場合
+
+src/psgl/dataにpostgresqlのmainディレクトリを移植する。linuxの場合は、/etc/postgresql/14/mainに保存されている。
+
+5. FATAL:  could not open directory "pg_notify": No such file or directoryなどと表示される場合、src/psgl/data/に不足しているファイル・ディレクトリを作成する。
 - pg_notify
 - pg_tblspg
 - pg_replslot
@@ -245,11 +251,9 @@ PostgreSQLサーバーが終了していない状態で、`sudo ./run.sh dev up`
 - pg_logical/pg_snapshots
 - pg_logical/mappings
 
-5. 別のデバイスからDBに接続できれば移植完了!
-
 ## データベースをすべて新規で作成する場合
 
-そのまま`sudo ./run.sh dev {build/up}`しても接続できない。
+5. そのまま`sudo ./run.sh dev {build/up}`しても接続できない。
 
 おそらくpsglディレクトリにあるpg_hba.confとpostgresql.confの設定を変える必要がある。
 
@@ -286,3 +290,4 @@ listen_addresses = '0.0.0.0'
 port = 5432
 ```
 
+6. 別のデバイスからDBに接続できれば移植完了!
