@@ -230,6 +230,25 @@ PostgreSQLサーバーが終了していない状態で、`sudo ./run.sh dev up`
 
 # Raspberry Piに移植（ほかのデバイスでビルド）
 
+1. このリポジトリをRaspberry Piの適当なディレクトリ(~/Documents/)などにgit clone
+2. `chmod 777 -R DiscordBot`で権限を付与
+3. DiscordBot/.envにDiscordBotのTOKENやPostgreSQLのDATABASE_URLなど、必要な環境変数を書き込む(`nano .env`)
+4. FATAL:  could not open directory "pg_notify": No such file or directoryなどと表示される場合、src/psgl/data/に不足しているファイル・ディレクトリを作成する。
+- pg_notify
+- pg_tblspg
+- pg_replslot
+- pg_twophase
+- pg_commit_ts
+- pg_stat_tmp/global.tmp
+- pg_snapshots
+- pg_logical/snapshots
+- pg_logical/pg_snapshots
+- pg_logical/mappings
+
+5. 別のデバイスからDBに接続できれば移植完了!
+
+## データベースをすべて新規で作成する場合
+
 そのまま`sudo ./run.sh dev {build/up}`しても接続できない。
 
 おそらくpsglディレクトリにあるpg_hba.confとpostgresql.confの設定を変える必要がある。
@@ -240,8 +259,8 @@ PostgreSQLサーバーが終了していない状態で、`sudo ./run.sh dev up`
 
 今の所こんな感じ↓の設定で動いている
 
+pg_hba.conf
 ```bash
-
 # Database administrative login by Unix domain socket
 local    all            postgres                                md5
 # TYPE  DATABASE        USER            ADDRESS                 METHOD
@@ -261,7 +280,9 @@ host    replication     all             ::1/128                 scram-sha-256
 local   all             all                                     md5
 ```
 
+postgresql.conf
 ```bash
 listen_addresses = '0.0.0.0'
 port = 5432
 ```
+
