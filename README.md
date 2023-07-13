@@ -246,7 +246,7 @@ src/psgl/dataにpostgresqlのmainディレクトリを移植する。linuxの場
 
 5. FATAL:  could not open directory "pg_notify": No such file or directoryなどと表示される場合、src/psgl/data/に不足しているファイル・ディレクトリを作成する。
 - pg_notify
-- pg_tblspg
+- pg_tblspc
 - pg_replslot
 - pg_twophase
 - pg_commit_ts
